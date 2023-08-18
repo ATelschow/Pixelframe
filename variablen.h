@@ -98,4 +98,11 @@ int ik=0;
 int color[16]={125,5,7,15,25,55,85,110,125,150,170,190,210,220,235,255};
 int Richtung=1;
 int startloop=1;
+
+// Joystick
+const int JoyPin = 34;
+volatile int Joy_in_Value = 0;
+
+
+
 #pragma endregion Variablen
