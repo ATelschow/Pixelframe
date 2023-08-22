@@ -38,6 +38,17 @@ const char index_html[] PROGMEM = R"rawliteral(
         .selector, .selector option{height: 30px;}
     </style>
     <script>
+      const all_controle_elements = ["adapt","brightness","band"]
+      const allocation = {
+         "1": ["adapt", "brightness"],
+         "2": ["brightness"],
+         "3": ["brightness"],
+         "4": ["adapt","brightness","band"],
+         "5": ["adapt","brightness"],
+         "6": ["brightness"],
+         "7": ["brightness"],
+         "8": ["brightness"]
+      }
         function visability(name, mode) {
             elements = document.getElementsByClassName(name)
             for (let i = 0; i < elements.length; i++) {
@@ -45,6 +56,7 @@ const char index_html[] PROGMEM = R"rawliteral(
             }
         }
         function chooseProgram(element) {
+            console.log(element)
             program = element.value
             var xhr = new XMLHttpRequest();
             xhr.open("GET", "/update?output=5&state=" + program, true);
@@ -52,20 +64,11 @@ const char index_html[] PROGMEM = R"rawliteral(
 
             program = parseInt(program)
 
-            if ([].includes(program)) visability("brightness", "none")
-            else visability("brightness", "block")
-
-            if ([1].includes(program)) visability("adapt", "block")
-            else visability("adapt", "none")
-
-            if ([5].includes(program)) visability("adapt", "block")
-            else visability("adapt", "none")
-
-            if ([4].includes(program)) visability("band", "block")
-            else visability("band", "none")
-
-            if ([8].includes(program)) visability("mover", "block")
-            else visability("mover", "none")
+            for (let i = 0; i < all_controle_elements.length; i++) {
+               const item = all_controle_elements[i];
+               if (allocation[program].includes(item)) visability(item, "block");
+               else visability(item, "none");
+            }
         }
         function sendslider(element) {
             var xhr = new XMLHttpRequest();
@@ -88,12 +91,12 @@ const char index_html[] PROGMEM = R"rawliteral(
 
 </head>
 
-<body>
+<body onload="chooseProgram(document.getElementById('mainselector'))">
     <h3>Das unglaubliche Lichtspektakel</h3>
 
     <h4>Choose Program</h4>
 
-    <select class="selector" onchange="chooseProgram(this);">
+    <select id="mainselector" class="selector" onchange="chooseProgram(this);">
         <option value="1">VU Meter</option>
         <option value="3">Fire</option>
         <option value="2">Tunnel Square</option>
@@ -116,9 +119,9 @@ const char index_html[] PROGMEM = R"rawliteral(
     <label class="myslider band"><input type="range" min="0" max="31" value="0" oninput="slidervalueupdate(this,'7h')" onchange="sendslider(this)"
         id="7"></label>
 
-    <h4 id ="8h" class="mover">mover - 0</h4>
+    <!-- <h4 id ="8h" class="mover">mover - 0</h4>
     <label class="myslider mover"><input type="range" min="0" max="28" value="14" oninput="slidervalueupdate(this,'8h')" onchange="sendslider(this)"
-        id="8"></label>
+        id="8"></label> -->
 </body>
 </html>
 )rawliteral";
