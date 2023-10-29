@@ -120,15 +120,7 @@ void Breakout_main()
 {
       FastLED.clear();
 
-      // read controller
-      Joy1_Analog += analogRead(Joy1_Analog_inPin);      
-      Joy1_Analog += analogRead(Joy1_Analog_inPin);
-      Joy1_Analog += analogRead(Joy1_Analog_inPin);      
-      Joy1_Analog += analogRead(Joy1_Analog_inPin);           
-      Joy1_Analog += analogRead(Joy1_Analog_inPin);
-      Joy1_Analog += analogRead(Joy1_Analog_inPin);      
-      Joy1_Analog += analogRead(Joy1_Analog_inPin);
-      boat = Joy1_Analog / 988;
+      boat = read_Joy1_Analog();
       if (boat >28) (boat = 28);
       Joy1_Analog = 0;
 
@@ -231,22 +223,22 @@ void Breakout_main()
          superscore = 1;
          }
 
-         Serial.print ("ballx : ");
-         Serial.println (ballx);
-         Serial.print ("bally : ");
-         Serial.println (bally);
-         Serial.print ("ballmx : ");
-         Serial.println (ballmx);
-         Serial.print ("ballmy : ");
-         Serial.println (ballmy);
-         Serial.print ("ballxi : ");
-         Serial.println (ballxi);
-         Serial.print ("ballyi : ");
-         Serial.println (ballyi);
-         Serial.print ("gamespeed : ");
-         Serial.println (gamespeed);
+         // Serial.print ("ballx : ");
+         // Serial.println (ballx);
+         // Serial.print ("bally : ");
+         // Serial.println (bally);
+         // Serial.print ("ballmx : ");
+         // Serial.println (ballmx);
+         // Serial.print ("ballmy : ");
+         // Serial.println (ballmy);
+         // Serial.print ("ballxi : ");
+         // Serial.println (ballxi);
+         // Serial.print ("ballyi : ");
+         // Serial.println (ballyi);
+         // Serial.print ("gamespeed : ");
+         // Serial.println (gamespeed);
          
-//Alles Abger�umt?
+//Alles Abgeraeumt?
       for (i=0; i<24; i++)
          {
          BlocksSum += Blocks[i];
@@ -278,14 +270,13 @@ void Breakout_main()
          }
 
 // Scrore
-   //matrix->fillScreen(0);
-   matrix->setTextSize(1);
-   matrix->setTextWrap(false);
-   matrix->setTextColor(2438);
-   matrix->setCursor(5, 18);
-   //matrix->fillScreen(0);
-   matrix->print(score);
-   //matrix->show();
+
+   // matrix->setTextSize(1);
+   // matrix->setTextWrap(false);
+   // matrix->setTextColor(2438);
+   // matrix->setCursor(5, 18);
+   // matrix->print(score);
+font();
 
       // Ballausgabe
       matrix->drawPixel(ballxi, ballyi, CHSV(100, 130,200));
@@ -348,4 +339,32 @@ ballxi_old=0;
 ballyi_old=0;
 gamespeed -= 10;
 Breakout_main();
+}
+
+int read_Joy1_Analog()
+{
+      // read controller
+      Joy1_Analog = 0;
+      Joy1_Analog += analogRead(Joy1_Analog_inPin);      
+      Joy1_Analog += analogRead(Joy1_Analog_inPin);
+      Joy1_Analog += analogRead(Joy1_Analog_inPin);      
+      Joy1_Analog += analogRead(Joy1_Analog_inPin);           
+      Joy1_Analog += analogRead(Joy1_Analog_inPin);
+      Joy1_Analog += analogRead(Joy1_Analog_inPin);      
+      Joy1_Analog += analogRead(Joy1_Analog_inPin);
+      return  (Joy1_Analog / 988);
+}
+
+int read_Joy2_Analog()
+{
+      // read controller
+      Joy2_Analog = 0;
+      Joy2_Analog += analogRead(Joy2_Analog_inPin);      
+      Joy2_Analog += analogRead(Joy2_Analog_inPin);
+      Joy2_Analog += analogRead(Joy2_Analog_inPin);      
+      Joy2_Analog += analogRead(Joy2_Analog_inPin);           
+      Joy2_Analog += analogRead(Joy2_Analog_inPin);
+      Joy2_Analog += analogRead(Joy2_Analog_inPin);      
+      Joy2_Analog += analogRead(Joy2_Analog_inPin);
+      return  (Joy2_Analog / 988);
 }

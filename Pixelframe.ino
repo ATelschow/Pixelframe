@@ -93,15 +93,27 @@ EVERY_N_MILLISECONDS(100)
    Serial.println (Joy1_button_B_FE);
    if ((Joy1_button_A_RE == 1) && (GPIO5 != 8))
       {
-      GPIO5++;
-      Joy1_button_A_RE = 0;
+      if (GPIO5 == 9)
+         {
+         GPIO5 = 1;
+         }
+      else
+         {
+         GPIO5++;
+         }
+         Joy1_button_A_RE = 0;
       }
    if ((Joy1_button_B_RE == 1) && (GPIO5 != 8))
       {
-      GPIO5--;
+      if (GPIO5 == 1)
+         {
+         GPIO5 = 9;
+         }
+      else
+         {
+         GPIO5--;
+         }
       Joy1_button_B_RE = 0;
       }
-
-
    }
 }
