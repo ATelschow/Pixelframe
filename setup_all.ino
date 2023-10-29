@@ -71,7 +71,8 @@ void setup_all()
 // Serial.println(": Opened GIF file, start decoding");
 // decoder.startDecoding();
 
-
+pinMode(Joy1_button_A_inPin, INPUT_PULLDOWN);
+pinMode(Joy1_button_B_inPin, INPUT_PULLDOWN);
 
 #pragma endregion gif_setup
 

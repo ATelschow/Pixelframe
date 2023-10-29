@@ -70,7 +70,7 @@ int c2[]={0,0,0,0,0,0,0,0};
 int index1 = 0;
 
 //scroll
-int scroll = 0;
+int scroll = 32;
 int scrollzlr = 0;
 
 //gif
@@ -89,7 +89,7 @@ long cycle1,altmillis1=0;
 int GPIO1=0;
 int GPIO2,GPIO3=0;
 int GPIO4 = 150;
-int GPIO5 = 1;
+int GPIO5 = 9;
 int GPIO6 = 2000;
 int GPIO7 = 0;
 int GPIO8 = 0;
@@ -99,10 +99,54 @@ int color[16]={125,5,7,15,25,55,85,110,125,150,170,190,210,220,235,255};
 int Richtung=1;
 int startloop=1;
 
-// Joystick
-const int JoyPin = 34;
-volatile int Joy_in_Value = 0;
+//Joystick
+const int Joy1_button_A_inPin = 22;
+const int Joy1_button_B_inPin = 23;
+const int Joy1_Analog_inPin = 34;
+const int Joy2_button_A_inPin = 38;
+const int Joy2_button_B_inPin = 39;
+const int Joy2_Analog_inPin = 35;
 
+int Joy1_Analog = 0;
+volatile int Joy1_button_A = 0;
+volatile int Joy1_button_B = 0;
+volatile int Joy1_button_A_RE = 0;
+volatile int Joy1_button_B_RE = 0;
+volatile int Joy1_button_A_FE = 0;
+volatile int Joy1_button_B_FE = 0;
+int Joy2_Analog = 0;
+int Joy2_button_A = 0;
+int Joy2_button_B = 0;
+int doubble_press_cntr = 0;
 
+//game
+
+typedef enum
+{
+   gs_none  =0,
+   gs_breakout,
+   gs_pong,
+} enum_gs;
+
+int selected_game = gs_none;
+int game_select_menu = 0;
+int boat=0;
+float ballx=15;
+float bally=15;
+float ballmx=0;
+float ballmy=1;
+int ballxi=0;
+int ballyi=0;
+int ballxi_old=0;
+int ballyi_old=0;
+int Blocks_full[]={1,2,6,2,11,2,16,2,21,2,26,2,1,5,6,5,11,5,16,5,21,5,26,5,1,8,6,8,11,8,16,8,21,8,26,8,1,11,6,11,11,11,16,11,21,11,26,11};
+int Blocks[] = {1,2,6,2,11,2,16,2,21,2,26,2,1,5,6,5,11,5,16,5,21,5,26,5,1,8,6,8,11,8,16,8,21,8,26,8,1,11,6,11,11,11,16,11,21,11,26,11};
+int score = 0;
+int BlocksSum = 0;
+int Ablaufsteuerung = 0;
+int gamespeed = 100;
+int superscore = 1;
+long starttime = 0;
+int firstcall = 1;
 
 #pragma endregion Variablen

@@ -53,6 +53,7 @@ Serial.print("Task1 running on core ");
 Serial.println(xPortGetCoreID());
 for(;;)
    {
+   read_buttons();
    if ((GPIO5 == 1) || (GPIO5 == 2) || (GPIO5 == 4)  || (GPIO5 == 5)) (Musik2());
    else delay(100);
    }
@@ -71,6 +72,7 @@ for(;;)
    if (GPIO5 == 6) (text());
    if (GPIO5 == 7) (gif());
    if (GPIO5 == 8) (game());
+   if (GPIO5 == 9) (zeigeIP());
    //if (GPIO1 == 0) (test());
       //else delay(100);
    }
@@ -78,8 +80,27 @@ for(;;)
 
 void loop()
 {
-EVERY_N_MILLISECONDS(200) 
-  {
-  FastLED.setBrightness(GPIO4);
-  }
+EVERY_N_MILLISECONDS(100) 
+   {
+   FastLED.setBrightness(GPIO4);
+
+   // Joy1_button_A_FE = digitalRead(Joy1_button_A_inPin);
+   // Joy1_button_B_FE = digitalRead(Joy1_button_B_inPin);
+   // Serial.print ("Joy1_button_A_FE : ");
+   // Serial.println (Joy1_button_A_FE);
+   // Serial.print ("Joy1_button_B_FE : ");
+   Serial.println (Joy1_button_B_FE);
+   if ((Joy1_button_A_RE == 1) && (GPIO5 != 8))
+      {
+      GPIO5++;
+      Joy1_button_A_RE = 0;
+      }
+   if ((Joy1_button_B_RE == 1) && (GPIO5 != 8))
+      {
+      GPIO5--;
+      Joy1_button_B_RE = 0;
+      }
+
+
+   }
 }

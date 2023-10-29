@@ -126,6 +126,25 @@ const char index_html[] PROGMEM = R"rawliteral(
 </html>
 )rawliteral";
 
+
+const char ota_html[] PROGMEM = R"rawliteral(
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File Upload</title>
+</head>
+<body>
+    <h2>File Upload</h2>
+    <form id="upload-form" action="/otaupload" method="post" enctype="multipart/form-data">
+        <input type="file" name="fileToUpload" id="fileToUpload">
+        <input type="submit" value="Upload File" name="submit">
+    </form>
+</body>
+</html>
+
+
+)rawliteral";
+
 //Replaces placeholder with button section in your web page
 String processor(const String& var){
   //Serial.println(var);

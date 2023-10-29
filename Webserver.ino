@@ -16,6 +16,11 @@ void Webserver(){
     request->send_P(200, "text/html", index_html, processor);
   });
 
+   // Route for ota_interface / web page
+  server.on("/ota", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send_P(200, "text/html", ota_html, processor);
+  });
+
   // Send a GET request to <ESP_IP>/update?output=<inputMessage1>&state=<inputMessage2>
   server.on("/update", HTTP_GET, [] (AsyncWebServerRequest *request) {
     String inputMessage1;
@@ -59,6 +64,37 @@ void Webserver(){
 
   });
 
+//   server.on("/otaupload", HTTP_POST, [](AsyncWebServerRequest *request){
+//     // Check if the request has a file attached
+//     if(request->hasParam("fileToUpload", true)){
+//       AsyncWebParameter* fileParam = request->getParam("fileToUpload", true);
+
+//       // Print the uploaded content directly
+//       Serial.println("Uploaded content:");
+//       Serial.println(fileParam->value());
+
+//       // Send a response back to the client
+//       request->send(200, "text/plain", "File content printed");
+//     } else {
+//       // No file or invalid request
+//       request->send(400, "text/plain", "Invalid request");
+//     }
+//   });
+
+
+  server.on("/otaupload", HTTP_POST, [](AsyncWebServerRequest * request) 
+  {
+    int paramsNr = request->params(); // number of params (e.g., 1)
+    Serial.println(paramsNr);
+    Serial.println();
+    
+    AsyncWebParameter * j = request->getParam(0); // 1st parameter
+    Serial.print("Size: ");
+    Serial.print(j->value());                     // value ^
+    Serial.println();
+
+    request->send(200);
+  });
   // Start server
   server.begin();
 
