@@ -37,7 +37,8 @@ while ((GPIO5 == 8) && (selected_game == gs_none))
          }
       else if (game_select_menu > 1)
          {
-         selected_game = gs_pong;  
+         init_pong();
+         selected_game = gs_pong;
          }
       Joy1_button_A_RE = 0;
       }
@@ -99,17 +100,27 @@ while ((GPIO5 == 8) && (selected_game == gs_none))
       }
    }
 
-while ((selected_game == gs_breakout) && (GPIO5 == 8))
+while ((GPIO5 == 8))
    {
-   EVERY_N_MILLISECONDS(gamespeed) 
+   if (selected_game == gs_breakout)
       {
-      if (Ablaufsteuerung == 0)
+      EVERY_N_MILLISECONDS(gamespeed) 
          {
-         Breakout_main();
+         if (Ablaufsteuerung == 0)
+            {
+            Breakout_main();
+            }
+         else if (Ablaufsteuerung == 1)
+            {
+            Breakout_punkte();
+            }
          }
-      else if (Ablaufsteuerung == 1)
+      }
+   if (selected_game == gs_pong)
+      {
+      EVERY_N_MILLISECONDS(gamespeed) 
          {
-         Breakout_punkte();
+         pong_main();
          }
       }
    }
@@ -276,7 +287,7 @@ void Breakout_main()
    // matrix->setTextColor(2438);
    // matrix->setCursor(5, 18);
    // matrix->print(score);
-font();
+font(score, 5, 18);
 
       // Ballausgabe
       matrix->drawPixel(ballxi, ballyi, CHSV(100, 130,200));
@@ -341,6 +352,144 @@ gamespeed -= 10;
 Breakout_main();
 }
 
+void pong_main()
+{
+int paddel_1 = 0;
+int paddel_2 = 0;
+FastLED.clear();
+paddel_1 = read_Joy1_Analog();
+paddel_2 = read_Joy2_Analog();
+if (paddel_1 >28) (paddel_1 = 28);
+if (paddel_2 >28) (paddel_2 = 28);
+
+// move ball
+ballx=ballx+ballmx;
+bally=bally+ballmy;
+
+ballxi_old = ballxi;
+ballyi_old = ballyi; 
+
+ballxi = (int) (ballx +0.5);
+ballyi = (int) (bally +0.5);
+if (ballyi > 31) (ballyi = 31);
+if (ballyi < 0) (ballyi = 0);
+
+// wall collision detection
+if (ballyi == 0) (ballmy = ballmy * -1);
+if (ballyi == 31) (ballmy = ballmy * -1);
+
+// paddle_1 collision detection
+if (ballxi == 0)
+   {
+   if ((ballyi == paddel_1) && (ballyi == 0))
+      {
+      ballmx = 1;
+      ballmy = 1.72;
+      }
+   else if (ballyi == paddel_1)
+      {
+      ballmx = 1;
+      ballmy = -1.72;
+      }
+   else if (ballyi == (paddel_1+1))
+      {
+      ballmx = 1;
+      ballmy = -0.58;
+      }
+   else if (ballyi == (paddel_1+2))
+      {
+      ballmx = 1;
+      ballmy = 0.58;
+      }
+   else if ((ballyi == (paddel_1+3)) && (ballyi == 31))
+      {
+      ballmx = 1;
+      ballmy = -1.72;
+      }
+   else if (ballyi == (paddel_1+3))
+      {
+      ballmx = 1;
+      ballmy = 1.72;
+      }
+   }
+
+// paddle_2 collision detection
+if (ballxi == 31)
+   {
+   if ((ballyi == paddel_2) && (ballyi == 0))
+      {
+      ballmx = -1;
+      ballmy = 1.72;
+      }
+   else if (ballyi == paddel_2)
+      {
+      ballmx = -1;
+      ballmy = -1.72;
+      }
+   else if (ballyi == (paddel_2+1))
+      {
+      ballmx = -1;
+      ballmy = -0.58;
+      }
+   else if (ballyi == (paddel_2+2))
+      {
+      ballmx = -1;
+      ballmy = 0.58;
+      }
+   else if ((ballyi == (paddel_2+3)) && (ballyi == 31))
+      {
+      ballmx = -1;
+      ballmy = -1.72;
+      }
+   else if (ballyi == (paddel_2+3))
+      {
+      ballmx = -1;
+      ballmy = 1.72;
+      }
+   }
+
+if (ballxi < 0)
+   {
+   ballx = 30;
+   bally = random(0,32);
+   ballmx = -1;
+   ballmy = 0;
+   score_2 += 1;
+   }
+
+if (ballxi > 31)
+   {
+   ballx = 1;
+   bally = random(0,32);
+   ballmx = 1;
+   ballmy = 0;
+   score_1 += 1;
+   }
+
+// Ballausgabe
+matrix->drawPixel(ballxi, ballyi, CHSV(100, 130,200));
+
+font(score_1, 3, 1);
+font(score_2, 22, 1);
+
+// paddel ausgabe
+matrix->drawPixel(0, (paddel_1), CHSV(255, 255,100));
+matrix->drawPixel(0, (paddel_1+1), CHSV(255, 255,100));
+matrix->drawPixel(0, (paddel_1+2), CHSV(255, 255,100));
+matrix->drawPixel(0, (paddel_1+3), CHSV(255, 255,100));
+
+matrix->drawPixel(31, (paddel_2), CHSV(255, 255,100));
+matrix->drawPixel(31, (paddel_2+1), CHSV(255, 255,100));
+matrix->drawPixel(31, (paddel_2+2), CHSV(255, 255,100));
+matrix->drawPixel(31, (paddel_2+3), CHSV(255, 255,100));
+
+FastLED.show();       
+
+
+
+}
+
+
 int read_Joy1_Analog()
 {
       // read controller
@@ -367,4 +516,23 @@ int read_Joy2_Analog()
       Joy2_Analog += analogRead(Joy2_Analog_inPin);      
       Joy2_Analog += analogRead(Joy2_Analog_inPin);
       return  (Joy2_Analog / 988);
+}
+
+void init_pong()
+{
+score_1 = 0;
+score_2 = 0;
+ballmy = 0;
+ballx=15;
+bally=15;
+ballxi=0;
+ballyi=0;
+ballxi_old=0;
+ballyi_old=0;
+gamespeed = 100;
+ballmx = 0;
+while (ballmx == 0)
+   {
+   ballmx = random (-1, 2);
+   }
 }

@@ -103,8 +103,8 @@ int startloop=1;
 const int Joy1_button_A_inPin = 22;
 const int Joy1_button_B_inPin = 23;
 const int Joy1_Analog_inPin = 34;
-const int Joy2_button_A_inPin = 38;
-const int Joy2_button_B_inPin = 39;
+const int Joy2_button_A_inPin = 18;
+const int Joy2_button_B_inPin = 19;
 const int Joy2_Analog_inPin = 35;
 
 int Joy1_Analog = 0;
@@ -148,5 +148,7 @@ int gamespeed = 100;
 int superscore = 1;
 long starttime = 0;
 int firstcall = 1;
+int score_1 = 0;
+int score_2 = 0;
 
 #pragma endregion Variablen

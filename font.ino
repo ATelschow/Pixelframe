@@ -1,4 +1,4 @@
-void font()
+int font(int input, int font_position_x, int font_position_y)
 {
 
 
@@ -8,19 +8,19 @@ int font_ten = 0;
 int font_one = 0;
 int font_negativ = 12;
 int font_score = 0;
-int font_position_x = 5;
+// int font_position_x = 5;
 
 
 // int fontzaehler=0;
 
-if (score < 0)
+if (input < 0)
    {
    font_negativ = 11;
-   font_score = score *-1;
+   font_score = input *-1;
    }
 else
    {
-   font_score = score;
+   font_score = input;
    }
 
 font_thousand = font_score / 1000;
@@ -59,20 +59,22 @@ if (font_thousand == 0)
 // fontzaehler = font_one;
 
 
-font_position_x = drawnumber(font_negativ, font_position_x);
+font_position_x = drawnumber(font_negativ, font_position_x, font_position_y);
 
-font_position_x = drawnumber(font_thousand, font_position_x);
+font_position_x = drawnumber(font_thousand, font_position_x, font_position_y);
 
-font_position_x = drawnumber(font_hundred, font_position_x);
+font_position_x = drawnumber(font_hundred, font_position_x, font_position_y);
 
-font_position_x = drawnumber(font_ten, font_position_x);
+font_position_x = drawnumber(font_ten, font_position_x, font_position_y);
 
-font_position_x = drawnumber(font_one, font_position_x);
+font_position_x = drawnumber(font_one, font_position_x, font_position_y);
+
+return 0;
 }
 
-int drawnumber(int fontzaehler, int font_pos_x )
+int drawnumber(int fontzaehler, int font_pos_x, int font_pos_y )
 {
-int font_position_y = 18;
+// int font_position_y = 18;
 int font_a[28];
 int font_1[] = {12,1,0,0,0,1,0,2,0,3,0,4};
 int font_2[] = {24,3,0,0,0,2,0,3,0,4,1,0,1,2,1,4,2,0,2,1,2,2,2,4};
@@ -81,7 +83,7 @@ int font_4[] = {20,3,0,0,0,1,0,2,1,2,2,0,2,1,2,2,2,3,2,4};
 int font_5[] = {24,3,0,0,0,1,0,2,0,4,1,0,1,2,1,4,2,0,2,2,2,3,2,4};
 int font_6[] = {26,3,0,0,0,1,0,2,0,3,0,4,1,0,1,2,1,4,2,0,2,2,2,3,2,4};
 int font_7[] = {16,3,0,0,1,0,2,0,2,1,2,2,2,3,2,4};
-int font_8[] = {28,3,0,0,0,1,0,2,0,3,0,4,1,0,1,2,1,4,2,0,2,2,1,2,2,3,2,4};
+int font_8[] = {28,3,0,0,0,1,0,2,0,3,0,4,1,0,1,2,1,4,2,0,2,1,2,2,2,3,2,4};
 int font_9[] = {22,3,0,0,0,1,0,2,1,0,1,2,2,0,2,1,2,2,2,3,2,4};
 int font_0[] = {26,3,0,0,0,1,0,2,0,3,0,4,1,0,1,4,2,0,2,1,2,2,2,3,2,4};
 int font_11[] = {8,3,0,2,1,2,2,2};
@@ -182,7 +184,7 @@ for (i=0; i<font_a[0]; i++)
    {
    if (( i % 2 == 0) && (i > 0))
       {
-      matrix->drawPixel((font_a[i] + font_pos_x),(font_a[i+1] + font_position_y),(CHSV(100, 130,200)));
+      matrix->drawPixel((font_a[i] + font_pos_x),(font_a[i+1] + font_pos_y),(CHSV(100, 130,200)));
       }
    }
 font_pos_x = font_pos_x + font_a[1] +1;
