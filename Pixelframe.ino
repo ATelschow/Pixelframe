@@ -1,7 +1,7 @@
 // DEVICETYPE1 = 1m x 1m
 // DEVICETYPE2 = 1024 Ikea Frame
 // DEVICETYPE3 = 256 Ikea Frame
-#define DEVICETYPE2 true
+#define DEVICETYPE1 true
 
 
 #include <Adafruit_GFX.h>  
@@ -45,7 +45,7 @@ Serial.begin(115200);
 setup_all();
 }
 
-int32_t raw_samples[SAMPLES];
+int32_t raw_samples[samples];
 
 void Task1code( void * pvParameters )
 {
@@ -90,7 +90,7 @@ EVERY_N_MILLISECONDS(100)
    // Serial.print ("Joy1_button_A_FE : ");
    // Serial.println (Joy1_button_A_FE);
    // Serial.print ("Joy1_button_B_FE : ");
-   Serial.println (Joy1_button_B_FE);
+   // Serial.println (Joy1_button_B_FE);
    if ((Joy1_button_A_RE == 1) && (GPIO5 != 8))
       {
       if (GPIO5 == 9)

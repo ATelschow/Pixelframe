@@ -14,8 +14,12 @@ int AMPLITUDE = 2000;         // Depending on your audio source level, you may n
 const uint8_t kMatrixWidth = (sqrt(LED_COUNT));        // Matrix width
 const uint8_t kMatrixHeight = (sqrt(LED_COUNT));
 
-#define SAMPLES         512     // Must be a power of 2
-#define SAMPLING_FREQ   40000   // Hz, must be 40000 or less due to ADC conversion time. Determines maximum frequency that can be analysed by the FFT Fmax=sampleF/2.
+// #define SAMPLES         512     // Must be a power of 2
+// #define SAMPLING_FREQ   40000   // Hz, must be 40000 or less due to ADC conversion time. Determines maximum frequency that can be analysed by the FFT Fmax=sampleF/2.
+const uint16_t samples = 512; //This value MUST ALWAYS be a power of 2
+const float signalFrequency = 20000;
+const float samplingFrequency = 40000;
+
 #define AUDIO_IN_PIN    35      // Signal in on this pin
 #define LED_PIN         16      // LED strip data
 #define COLOR_ORDER     GRB     // If colours look wrong, play with this

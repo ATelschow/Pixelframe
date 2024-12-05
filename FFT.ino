@@ -5,8 +5,8 @@ altmillis=millis();
 v++;
 if (v>100)
    {
-    cycle = cycle / 100;
-    Serial.print ("cycle:");
+   cycle = cycle / 100;
+   Serial.print ("cycle:");
    Serial.print (cycle);
    Serial.println ("ms");
    cycle =0;
@@ -18,9 +18,6 @@ for (int i = 0; i < 32; i++)
    {
    adaptsum = adaptsum + adapt[i];
    }
-
-
-
 adaptzlr++;
 if (adaptzlr > 100)
    {
@@ -29,10 +26,22 @@ if (adaptzlr > 100)
    Serial.print(adaptsum);
    Serial.print("::");
    Serial.println(AMPLITUDE);
-   if (adaptcnt < 70 && adaptsum >50 && AMPLITUDE >200 && LED_COUNT == 1024) (AMPLITUDE = AMPLITUDE -20);
-   if (adaptcnt > 400 && LED_COUNT == 1024) (AMPLITUDE = AMPLITUDE +20);
-   if (adaptcnt < 70 && adaptsum >25 && AMPLITUDE >500 && LED_COUNT == 256) (AMPLITUDE = AMPLITUDE -20);
-   if (adaptcnt > 250 && LED_COUNT == 256) (AMPLITUDE = AMPLITUDE +20);
+   if (adaptcnt < 70 && adaptsum >50 && AMPLITUDE >200 && LED_COUNT == 1024) 
+      {
+      AMPLITUDE = AMPLITUDE -20;
+      }
+   else if (adaptcnt > 400 && LED_COUNT == 1024)
+      {
+      AMPLITUDE = AMPLITUDE +20;
+      }
+   else if (adaptcnt < 70 && adaptsum >25 && AMPLITUDE >500 && LED_COUNT == 256) 
+      {
+      AMPLITUDE = AMPLITUDE -20;
+      }
+   else if (adaptcnt > 250 && LED_COUNT == 256) 
+      {
+      AMPLITUDE = AMPLITUDE +20;
+      }
    adaptcnt=0;
    adaptzlr=0;
    }
@@ -54,18 +63,26 @@ for (byte band = 0; band < NUM_BANDS; band++)
    else if (NUM_BANDS == 16) (barHeight = (bandValues[(band*2)]+bandValues[((band*2)+1)]) / (2*AMPLITUDE));
 
    //Serial.printf("%ld\n", barHeight);
-   if (barHeight > TOP) barHeight = TOP;
-   if (barHeight >= (kMatrixHeight-(kMatrixHeight/16))) (adaptcnt++);
-
+   if (barHeight > TOP) 
+      {
+      barHeight = TOP;
+      }
+   if (barHeight >= (kMatrixHeight-(kMatrixHeight/16))) 
+      {
+      adaptcnt++;
+      }
 
    adapt[band] = barHeight;
 
    // Small amount of averaging between frames
-   //int barHeighttemp = ((oldBarHeights[band] * 2) + (1*barHeight)) / 3;
+
    int barHeighttemp = ((oldBarHeights[band] * 1) +(oldBarHeights1[band] * 1) + (1*barHeight)) / 3;
    oldBarHeights1[band] = oldBarHeights[band];
    oldBarHeights[band] = barHeight;
-   barHeight = barHeighttemp;
+   // if (barHeight <= barHeighttemp)
+   //    {
+      barHeight = barHeighttemp;
+      // }
 
    //Serial.printf("%ld\n", barHeight);
    // Move peak up

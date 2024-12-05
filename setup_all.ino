@@ -9,8 +9,8 @@ void setup_all()
   #pragma endregion Fastled_setup
 
   #pragma region Misc_setup
-  sampling_period_us = round(1000000 * (1.0 / SAMPLING_FREQ));
-
+//   sampling_period_us = round(1000000 * (1.0 / SAMPLING_FREQ));
+  sampling_period_us = round(1000000 * (1.0 / samplingFrequency));
   // start up the I2S peripheral
   i2s_driver_install(I2S_NUM_0, &i2s_config, 0, NULL);
   i2s_set_pin(I2S_NUM_0, &i2s_mic_pins);
