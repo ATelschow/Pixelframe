@@ -3,8 +3,8 @@ void Webserver(){
 
    // Connect to Wi-Fi
   WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(1000);
+  if (WiFi.status() != WL_CONNECTED) {
+    delay(2000);
     Serial.println("Connecting to WiFi..");
   }
 

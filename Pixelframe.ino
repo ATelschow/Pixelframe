@@ -1,7 +1,7 @@
 // DEVICETYPE1 = 1m x 1m
 // DEVICETYPE2 = 1024 Ikea Frame
 // DEVICETYPE3 = 256 Ikea Frame
-#define DEVICETYPE1 true
+#define DEVICETYPE3 true
 
 
 #include <Adafruit_GFX.h>  
@@ -73,6 +73,7 @@ for(;;)
    if (GPIO5 == 7) (gif());
    if (GPIO5 == 8) (game());
    if (GPIO5 == 9) (zeigeIP());
+   if (GPIO5 == 10) (charge());
    //if (GPIO1 == 0) (test());
       //else delay(100);
    }
@@ -91,6 +92,7 @@ EVERY_N_MILLISECONDS(100)
    // Serial.println (Joy1_button_A_FE);
    // Serial.print ("Joy1_button_B_FE : ");
    // Serial.println (Joy1_button_B_FE);
+#if defined(DEVICETYPE1) || defined(DEVICETYPE2)
    if ((Joy1_button_A_RE == 1) && (GPIO5 != 8))
       {
       if (GPIO5 == 9)
@@ -115,5 +117,24 @@ EVERY_N_MILLISECONDS(100)
          }
       Joy1_button_B_RE = 0;
       }
+#endif
+#if defined(DEVICETYPE3)
+   if ((Joy1_button_A_RE == 1) && (GPIO5 != 8))
+      {
+      if (GPIO5 == 5)
+         {
+         GPIO5 = 10;
+         }
+      else if (GPIO5 == 10)
+         {
+         GPIO5 = 1;
+         }
+      else
+         {
+         GPIO5++;
+         }
+         Joy1_button_A_RE = 0;
+      }
+#endif
    }
 }

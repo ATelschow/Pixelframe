@@ -20,10 +20,15 @@ DEFINE_GRADIENT_PALETTE( redyellow_gp ) {
 128,   231,   0,    0,   //red
 192,   255, 218,    0,   //yellow
 255,   250, 250,  50 }; //white
+DEFINE_GRADIENT_PALETTE( redyellowgreen_gp ) {
+0  ,   231,   0,    0,   //red
+125,   255, 218,    0,   //yellow
+255,   0, 255,  60 }; //green
 CRGBPalette16 purplePal = purple_gp;
 CRGBPalette16 outrunPal = outrun_gp;
 CRGBPalette16 greenbluePal = greenblue_gp;
 CRGBPalette16 heatPal = redyellow_gp;
+CRGBPalette16 BatteryPal = redyellowgreen_gp;
 uint8_t colorTimer = 0;
 
 const uint16_t textcolors[] = {
@@ -63,7 +68,7 @@ FastLED_NeoMatrix *matrix = new FastLED_NeoMatrix(leds, 16, 16, 2, 2,
 // Choose this for 256:
 #if defined(DEVICETYPE3)
 FastLED_NeoMatrix *matrix = new FastLED_NeoMatrix(leds, kMatrixWidth, kMatrixHeight,
-  NEO_MATRIX_TOP        + NEO_MATRIX_LEFT +
+  NEO_MATRIX_BOTTOM        + NEO_MATRIX_LEFT +
   NEO_MATRIX_ROWS       + NEO_MATRIX_ZIGZAG +
   NEO_TILE_TOP + NEO_TILE_LEFT + NEO_TILE_ROWS);
 #endif

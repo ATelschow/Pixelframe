@@ -74,6 +74,7 @@ void setup_all()
 pinMode(Joy1_button_A_inPin, INPUT_PULLDOWN);
 pinMode(Joy1_button_B_inPin, INPUT_PULLDOWN);
 
+
 #pragma endregion gif_setup
 
   #pragma region Taskcreation

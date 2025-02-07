@@ -84,7 +84,7 @@ void make_fire() {
     for ( j=0; j<cols; ++j ) {
       //leds[i*j] = colors[pix[i][j]];
       if (kMatrixWidth==32) (matrix->drawPixel(j,((rows-1)-i), colors[pix[i][j]] ));
-      else if (kMatrixWidth==16) (matrix->drawPixel(j, i, colors[pix[i][j]] ));
+      else if (kMatrixWidth==16) (matrix->drawPixel(j,((rows-1)-i), colors[pix[i][j]] ));
       
      // Serial.print(i);
        // Serial.print(" ");

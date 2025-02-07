@@ -73,9 +73,7 @@ int c1[]={0,0,0,0,0,0,0,0};
 int c2[]={0,0,0,0,0,0,0,0};
 int index1 = 0;
 
-//scroll
-int scroll = 32;
-int scrollzlr = 0;
+
 
 //gif
 int gifinit=0;
@@ -92,7 +90,18 @@ long cycle,altmillis=0;
 long cycle1,altmillis1=0;
 int GPIO1=0;
 int GPIO2,GPIO3=0;
+#if defined(DEVICETYPE1) || defined(DEVICETYPE2)
 int GPIO4 = 150;
+//scroll
+int scroll = 32;
+int scrollzlr = 0;
+#endif
+#if defined(DEVICETYPE3)
+//scroll
+int scroll = -60;
+int scrollzlr = 0;
+int GPIO4 = 64;
+#endif
 int GPIO5 = 9;
 int GPIO6 = 2000;
 int GPIO7 = 0;
@@ -154,5 +163,11 @@ long starttime = 0;
 int firstcall = 1;
 int score_1 = 0;
 int score_2 = 0;
+
+//charge
+int batteryvoltage=0;
+const int batteryvoltage_inPin = 32;
+
+
 
 #pragma endregion Variablen
